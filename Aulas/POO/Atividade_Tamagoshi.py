@@ -9,15 +9,18 @@ class Dragao(Tamaghosi):
         self.tedio = 5
         self.forca_fogo = 0
     
-    def alimentar(self, quantidade):
-        resultado = super().alimentar(quantidade)
-        self.aumentarForcaPorComida(quantidade)
-        return resultado
-    
-    def aumentarForcaPorComida(self, quantidade):
+    #Método 1
+    def aumentarForcaFogo(self, quantidade):
         self.forca_fogo += quantidade
         if self.forca_fogo > 100:
             self.forca_fogo = 100
+    #Método 2
+
+    #Método 3
+    def alimentar(self, quantidade):
+        resultado = super().alimentar(quantidade)
+        self.aumentarForcaFogo(quantidade)
+        return resultado
     
     def getHumor(self):
         return super().getHumor()
@@ -25,6 +28,7 @@ class Dragao(Tamaghosi):
     def brincar(self, quantidade):
         return super().brincar(quantidade)
         
+    
 
 
 class PlantaCarnivora(Tamaghosi):
@@ -72,11 +76,11 @@ class Macaco(Tamaghosi):
 def main():
     dragao1 = Dragao("LAYSLLE")
     
-    # Alimenta o dragão e aumenta a força automaticamente
-    dragao1.alimentar(80)
-    dragao1.brincar(40)
     
+    dragao1.alimentar(90)
+    
+    print(f"Nome: {dragao1.nome}")
     print(f"Força de Fogo: {dragao1.forca_fogo}")
     print(f"Humor: {dragao1.getHumor()}")
-    print(f"Fome: {dragao1.brincar()}")
+    
 main()
