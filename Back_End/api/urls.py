@@ -8,7 +8,7 @@ urlpatterns = [
     path('editoras', EditoraView.as_view()),
     path('livro', LivroView.as_view()),
 
-    path('autor<int:pk>', AutoresCrud.as_view()),
-    path('editora<int:pk>', EditoraCrud.as_view()),
-    path('livro<int:pk>', LivroCrud.as_view())
+    path('autor/<int:pk>', AutoresCrud.as_view()),
+    path('editora/<int:pk>', EditoraCrud.as_view()),
+    path('livro/<int:pk>', LivroCrud.as_view())
 ]
