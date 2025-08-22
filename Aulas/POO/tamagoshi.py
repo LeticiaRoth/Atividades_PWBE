@@ -1,7 +1,10 @@
+import os
+import platform
+
 class Tamaghosi:
     def __init__(self, nome:str):
         self.nome = nome
-        self.fome = 0
+        self.fome = 10
         self.saude = 100
         self.idade = 0
         self.tedio = 0
@@ -20,6 +23,7 @@ class Tamaghosi:
         humor = 100 - ((self.fome + self.tedio)/2)
         return int(humor) if humor > 0 else 0
 
+    #Determina a saúde, quando a fome e o tédio aumenta, a saúde diminui
     def vida(self):
         if (self.fome > 90) or (self.tedio > 90):
             self.saude -= 40
@@ -30,7 +34,7 @@ class Tamaghosi:
         
         if self.saude <= 0:
             self.saude = 0
-            print("Seu bichinho morreu")
+            print(f"{self.nome} Seu bichinho infelizmente morreu... :( ")
 
     def tempoPassando(self):
         self.vida()
@@ -45,9 +49,10 @@ class Tamaghosi:
         print(f"\n--- Status de {self.nome} ---")
         print(f"Idade: {self.idade}")
         print(f"Saude: {self.saude}/100")
-        print(f"Fome: {int(self.fome)}/100")
-        print(f"Tedio: {int(self.tedio)}/100")
+        print(f"Fome: {self.fome:.0f}/100")
+        print(f"Tedio: {self.tedio:.0f}/100")
         print(f"Humor: {self.getHumor()}/100")
+
 
     #Loop de vida
     def esta_vivo(self):

@@ -1,6 +1,16 @@
 from tamagoshi import Tamaghosi
+import os
+import platform
+
+#Para limpar o terminal, conforme for sendo rodado
+def limpar_tela():
+        if platform.system() == "Windows":
+            os.system("cls")
+        else:
+            os.system("clear")
 
 #Classes filhas, polimorfismo
+
 
 #Subclasse Dragão
 class Dragao(Tamaghosi):
@@ -25,7 +35,7 @@ class Dragao(Tamaghosi):
     # Método 3
     def soltarFogo(self):
         if self.forcaFogo >= 20:
-            print(f"{self.nome} soltou uma baforada de fogo!")
+            print(f"{self.nome} soltou muito de fogo!")
             self.forcaFogo -= 20
         else:
             print(f"{self.nome} tentou, mas não tem força suficiente.")
@@ -78,9 +88,10 @@ class Macaco(Tamaghosi):
         if self.bananas > 0:
             self.bananas -= 1
             print(f"{self.nome} comeu uma banana! Restam {self.bananas}.")
-            self.alimentar(90) #comer reduz a fome em 90%
+            self.alimentar(70) #comer reduz a fome em 90%
         else:
-            print(f"{self.nome} procurou, mas não tem mais bananas! '-' ")
+            print(f"{self.nome} queria comer, mas não tem mais bananas! '-' ")
+
         self.tempoPassando()
 
     # Método 2
@@ -100,22 +111,32 @@ class Macaco(Tamaghosi):
         print(f"Bananas: {self.bananas}")
 
 
-#Parte dois com as funcionalidade do mennu
 
+#Parte dois com as funcionalidade do mennu
 def main():
     #uma lista para o historico
     historico = []
 
-    print("************************************************")
+    print("\n************************************************")
+    print("                                                   ")
     print(" BEM-VINDO AO TAMAGOSHI - SEU BICHINHO VIRTUAL! ")
+    print("                                                    ")
     print("************************************************")
     
+    
+    
+
+    #Ainda não foi definido
     bichinho = None
     while bichinho is None:
         try:
-            escolha_str = input("\nEscolha seu bichinho:\n1 - Dragao\n2 - Planta\n3 - Macaco\nSua escolha: ")
+            print("\nPRIMEIRA DE TUDO:")
+            escolha_str = input("Escolha seu bichinho:\n1 - 🐉 Dragão\n2 - 🌱 Planta\n3 - 🐒 Macaco\nSua escolha: ")
+            #Converto a escolha
             escolha = int(escolha_str)
             nome = input("Qual nome você quer dar ao seu bichinho? ")
+            limpar_tela()
+
             if escolha == 1:
                 bichinho = Dragao(nome)
             elif escolha == 2:
@@ -123,34 +144,46 @@ def main():
             elif escolha == 3:
                 bichinho = Macaco(nome)
             else:
+                print("!!!!! ATENÇÃO !!!!!")
                 print("Opção inválida! Tente novamente.")
         except ValueError:
-            print("Entrada inválida. Por favor, digite um numero.")
+            print("Entrada inválida. Por favor, digite apenas um número!")
             
     print(f"\nParabéns! {bichinho.nome} nasceu ;)!")
+
+    #Histórico 
     historico.append(f"{bichinho.nome} nasceu!")
 
+#Se o bichinho estiver vivo rodará o while
     while bichinho.esta_vivo():
         bichinho.status()
+
+        
         
         print(f"\nO que você quer fazer com o {bichinho.nome}?")
         print("1 - Alimentar")
         print("2 - Brincar")
 
         #Depende da escolha
+        #Se o usuário selecionar o Dragão
         if isinstance(bichinho, Dragao):
             print("3 - Treinar Fogo")
             print("4 - Voar")
             print("5 - Soltar Fogo")
+
+        #Se o usuário selecionar a Planta
         elif isinstance(bichinho, Planta):
             print("3 - Regar")
             print("4 - Tomar Sol")
             print("5 - Adubar")
+
+        #Se o usuário selecionar o Macaco    
         elif isinstance(bichinho, Macaco):
             print("3 - Comer Banana")
             print("4 - Pular em Arvores")
             print("5 - Procurar Bananas")
-        
+
+        #Isso para todos
         print("6 - Ver histórico de ações")
         print("0 - Sair do Jogo")
         
@@ -168,57 +201,59 @@ def main():
             
             elif isinstance(bichinho, Dragao) and opcao == '3':
                 bichinho.treinarFogo()
-                historico.append("Treinou o fogo.")
+                historico.append("Treinou o fogo. 🔥")
             elif isinstance(bichinho, Dragao) and opcao == '4':
                 bichinho.voar()
-                historico.append("Voou pelos céus.")
+                historico.append("Voou pelos céus. 💨")
             elif isinstance(bichinho, Dragao) and opcao == '5':
                 bichinho.soltarFogo()
-                historico.append("Soltou uma baforada de fogo.")
+                historico.append("Soltou uma baforada de fogo. 🐲")
             
             elif isinstance(bichinho, Planta) and opcao == '3':
                 bichinho.regar()
-                historico.append("Foi regado(a).")
+                historico.append("Foi regado(a). 💦")
             elif isinstance(bichinho, Planta) and opcao == '4':
                 bichinho.tomarSol()
-                historico.append("Tomou sol.")
+                historico.append("Tomou sol. ☀️")
             elif isinstance(bichinho, Planta) and opcao == '5':
                 bichinho.adubar()
-                historico.append("Foi adubado(a).")
+                historico.append("Foi adubado(a). 🌻")
             
             elif isinstance(bichinho, Macaco) and opcao == '3':
                 bichinho.comerBanana()
-                historico.append("Comeu uma banana.")
+                historico.append("Comeu uma banana. 🍌")
             elif isinstance(bichinho, Macaco) and opcao == '4':
                 bichinho.pularArvores()
-                historico.append("Pulou nas árvores.")
+                historico.append("Pulou nas árvores. 🌳")
             elif isinstance(bichinho, Macaco) and opcao == '5':
                 bichinho.procurarBananas()
-                historico.append("Procurou por bananas.")
+                historico.append("Procurou por bananas 🍌🍌")
             
+                
             elif opcao == '6':
+                limpar_tela()
                 print("\n--- Histórico de Ações ---")
                 if not historico:
                     print("Nenhuma ação registrada ainda.")
                 else:
-                    #usado para contar cada item da lista do hsitorico
+                    #usado para contar cada item da lista do hsitorico, enumera
                     for i, acao in enumerate(historico):
                         print(f"{i+1}: {acao}")
                 input("\nPressione Enter para voltar ao jogo...")
                 continue
             
             elif opcao == '0':
-                print(f"Atá mais, volte logo!")
+                print(f"Atá mais, volte logo ;)!")
                 break
             else:
                 print("Opçãoo inválida!")
         except ValueError:
-            print("Entrada inválida. Por favor, digite um numero.")
+            print("Entrada inválida. Por favor, digite apenas nímeros.")
         
         print("\n--------------------------------------")
 
     if not bichinho.esta_vivo():
-        print("GAME OVER . . . . ")
+        print("GAME OVER :( :( . . . . ")
 
 # Inicia o programa
 main()
