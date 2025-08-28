@@ -5,23 +5,26 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from .models import Autor, Editora, Livro
 from .serializers import AutorSerializer, EditoraSerializer,LivroSerializer
 
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 
+from rest_framework.permissions import IsAuthenticated
 #Serve como um post, e o list como get
 class AutoresView(ListCreateAPIView):
     #query é um tipo de busca
     #set envia
     queryset = Autor.objects.all() #Aquilo que o usuário verá, no caso todos os objetos dentro da classe Autor
     serializer_class = AutorSerializer
-
+    permission_classes = [IsAuthenticated]
 class AutoresCrud(RetrieveUpdateDestroyAPIView): #Realize o método do CRUD dentro da API 
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer #Quando buscados vem em forma de JSON
+    permission_classes = [IsAuthenticated]
 
 #Método do CRUD dos autores
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def visualizacao_autor(request):
     if request.method == 'GET':
         queryset = Autor.objects.all()
@@ -68,12 +71,15 @@ def detalhes_autores(request,pk):
 class EditoraView(ListCreateAPIView):
     queryset = Editora.objects.all()
     serializer_class = EditoraSerializer #Quando buscados vem em forma de JSON
+    permission_classes = [IsAuthenticated]
 class EditoraCrud(RetrieveUpdateDestroyAPIView):
     queryset = Editora.objects.all()
     serializer_class = EditoraSerializer
+    permission_classes = [IsAuthenticated]
 
 #Método do CRUD dos editora
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def visualizar_editora(request):
     if request.method == 'GET':
         queryset = Editora.objects.all()
@@ -118,12 +124,16 @@ def detalhes_editoras(request,pk):
 class LivroView(ListCreateAPIView):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer #Quando buscados vem em forma de JSON
+    permission_classes = [IsAuthenticated]
+
 class LivroCrud(RetrieveUpdateDestroyAPIView):
     queryset = Livro.objects.all()
     serializer_class = LivroSerializer
+    permission_classes = [IsAuthenticated]
 
 #Método do CRUD dos autores
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def visualizacao_livro(request):
     if request.method == 'GET':
         queryset = Livro.objects.all()

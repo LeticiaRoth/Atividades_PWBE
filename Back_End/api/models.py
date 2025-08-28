@@ -23,7 +23,7 @@ class Editora(models.Model):
 
     #Como será visto os campos
     def __str__(self):
-        return f"{self.editora}"
+        return f"{self.editora} {self.cnpj} {self.endereco} {self.telefone} {self.email}{self.site}"
 
 
 class Livro(models.Model):
