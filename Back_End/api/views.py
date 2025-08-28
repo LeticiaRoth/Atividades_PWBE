@@ -1,6 +1,9 @@
 from django.shortcuts import render #Renderiza
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+
 #Importação do Serializer e Autor
 from .models import Autor, Editora, Livro
 from .serializers import AutorSerializer, EditoraSerializer,LivroSerializer
@@ -21,6 +24,10 @@ class AutoresCrud(RetrieveUpdateDestroyAPIView): #Realize o método do CRUD dent
     queryset = Autor.objects.all()
     serializer_class = AutorSerializer #Quando buscados vem em forma de JSON
     permission_classes = [IsAuthenticated]
+    filters_backend = [DjangoFilterBackend, SearchFilter]
+    filterset_fiel = ['id']
+    search_fields = ['nome']
+ 
 
 #Método do CRUD dos autores
 @api_view(['GET', 'POST'])
