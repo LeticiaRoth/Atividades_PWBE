@@ -1,73 +1,201 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; /* altura total da tela */
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-form {
-  background: #fff;
-  padding: 30px 30px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-  width: 300px;
+/*TELA LOGIN*/
+/* Container principal */
+.containerLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
 }
 
-fieldset {
-  border: none;
-  padding: 0;
+/* Formulário */
+#formLogin {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 7px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 350px;
 }
 
-legend {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  text-align: center;
+#formLogin fieldset {
+    border: none; /*Remove a borda!*/   
+    padding: 0;    
+    margin: 0;          
 }
 
-div {
-  margin-bottom: 15px;
+/* Título do formulário */
+#formLogin legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+/* Lista do formulário */
+.listaFormulario {
+    list-style: none;
+    margin-bottom: 1rem;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.listaFormulario li {
+    margin-bottom: 1rem;
 }
 
-button {
-  width: 100%;
-  padding: 10px;
-  background: #0d4e10;
-  color: white;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+/* Labels */
+.listaFormulario label {
+    display: block;
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 0.3rem;
 }
 
-button:hover {
-  background: #45a049;
+/* Inputs */
+.listaFormulario input {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-a {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  color: #007BFF;
-  text-decoration: none;
+.listaFormulario input:focus {
+    outline: none;
+    border-color: #c915ec;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
 }
 
-a:hover {
-  text-decoration: underline;
+/* Botão */
+.botaoEntrar {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0e8d23;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.botaoEntrar:hover {
+    background-color: #043f1a;
+}
+
+/* Navegação */
+.navegacaoLogin {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#linkRecuperarSenha {
+    font-size: 0.9rem;
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#linkRecuperarSenha:hover {
+    color: #357ab8;
+    text-decoration: underline;
+}
+
+
+
+/*TELA CADASTRO*/
+/* Container da tela de cadastro */
+.containerCadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
+}
+
+/* Formulário */
+#formCadastro {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 7px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 550px;   
+}
+
+/* Fieldset sem borda */
+#formCadastro fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Legenda */
+#formCadastro legend {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Lista */
+.listaCadastro {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.listaCadastro li {
+    margin-bottom: 1rem;
+}
+
+/* Labels */
+.listaCadastro label {
+    display: block;
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.3rem;
+}
+
+/* Inputs da vida */
+.listaCadastro input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.listaCadastro input:focus {
+    outline: none;
+    border-color: #c915ec;
+    box-shadow: 0 0 6px rgba(80, 201, 195, 0.4);
+}
+
+/* Botão cadatrar */
+.botaoCadastrar {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0e8d23;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.botaoCadastrar:hover {
+    background-color: #043f1a;
 }

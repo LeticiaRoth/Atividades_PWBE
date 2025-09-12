@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <form>
-    <fieldset>
-      <legend>Login</legend>
-
-      <div>
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" name="usuario" required>
-      </div>
-
-      <div>
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-      </div>
-
-      <div>
-        <button type="submit">Entrar</button>
-      </div>
-
-      <div>
-        <a href="#">Esqueci minha senha</a>
-      </div>
-    </fieldset>
-  </form>
+    <main class="containerLogin">
+        <form id="formLogin">
+            <fieldset>
+                <legend>Login</legend>
+                <ul class="listaFormulario">
+                    <li>
+                        <label for="usuarioInput">Usuario:</label>
+                        <input type="text" id="usuarioInput" name="usuario" maxlength="50" required>
+                    </li>
+                    <li>
+                        <label for="senhaInput">Senha:</label>
+                        <input type="password" id="senhaInput" name="senha" maxlength="15" required>
+                    </li>
+                </ul>
+                <button type="submit" class="botaoEntrar">Entrar</button>
+                <nav class="navegacaoLogin">
+                    <a href="#" id="linkRecuperarSenha">Esqueci minha senha</a>
+                </nav>
+            </fieldset>
+        </form>
+    </main>
 </body>
 </html>
