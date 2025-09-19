@@ -19,6 +19,7 @@ server.serve_forever()
  
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
+from urllib.parse import parse_qs
  
 class MyHandle (SimpleHTTPRequestHandler):
     def list_directory(self, path):
@@ -36,6 +37,17 @@ class MyHandle (SimpleHTTPRequestHandler):
             pass
         return super().list_directory(path)
    
+
+    #Verificação simples de usuário logado ou não logado
+    def accont_user(login,password):
+        loga = "leticiaroth@gmail.com"
+        senha = 12345
+
+        if login == loga and senha == password:
+            return "Usuário logado"
+        else:
+            return "Usuário não existe "
+    
     #Requisição do GET
     def do_GET(self):
         if self.path == "/login":
@@ -73,6 +85,34 @@ class MyHandle (SimpleHTTPRequestHandler):
         else:
             super().do_GET()
  
+
+        #Método do POST
+    def do_POST(self):
+        if self.path == '/send_login':
+            #Tamanho da requisição que está sendo mandada
+            content_length = int(self.headers['Content-length'])
+            body = self.rfile.read(content_length).decode('utf-8')
+            form_data = parse_qs(body)
+
+            login = form_data.get('email',[""])[0]
+            password = form_data.get('senha',[""])[0]
+
+            logou
+            print("Data Form:")
+            print("Email:", form_data.get('email',[""])[0])
+            print("Senha:", form_data.get("senha",[""])[0])
+
+
+            
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write("Data Retrieving Sucess!".encode('utf-8'))
+        else:
+            super(MyHandle, self).do_POST()
+
+
+
 def main():
     server_address =('',8000)
     httpd = HTTPServer (server_address,MyHandle)
