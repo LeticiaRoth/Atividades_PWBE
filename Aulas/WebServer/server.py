@@ -19,104 +19,125 @@ server.serve_forever()
  
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
-from urllib.parse import parse_qs
- 
-class MyHandle (SimpleHTTPRequestHandler):
-    def list_directory(self, path):
-        try:
-            f = open(os.path.join(path,'index.html'), 'r')
- 
-            #Cabeçaho do header
-            self.send_response(200)
-            self.send_header("Content-type","text/html")
-            self.end_headers    
-            self.wfile.write(f.read().encode('utf-8'))
-            f.close()
-            return None
-        except FileNotFoundError:
-            pass
-        return super().list_directory(path)
-   
+from urllib.parse import parse_qs, urlparse
+import json
 
-    #Verificação simples de usuário logado ou não logado
-    def accont_user(login,password):
+class MyHandler(SimpleHTTPRequestHandler):
+
+    #Usuário teste
+    def accont_user(self, login, password):
         loga = "leticiaroth@gmail.com"
-        senha = 12345
-
-        if login == loga and senha == password:
-            return "Usuário logado"
+        senha = "12345"
+        
+        if login == loga and password == senha:
+            print("Usuário logado!") 
+            # Redireciona para a página de cadastro após o login (LEMBRAR)
+            self.send_response(303)
+            self.send_header('Location', '/cadastro')
+            self.end_headers()
         else:
-            return "Usuário não existe "
+            print("Usuário não existe!") 
+            self.send_response(200)
+            self.send_header("Content-type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write("Usuário não existe".encode('utf-8'))
     
-    #Requisição do GET
+    #REQUISIÇÕES GET, para servir como API
     def do_GET(self):
-        if self.path == "/login":
-            try:
-                with open(os.path.join(os.getcwd(), "login.html"), "r") as login:
-                    content = login.read()
-                self.send_response(200)
-                self.send_header("Content-type","text/html")
-                self.end_headers()
-                self.wfile.write(content.encode('utf-8'))
-            except FileNotFoundError:
-                self.send_error(404, "File not found")
+        parsed_path = urlparse(self.path)
+        path = parsed_path.path
 
-        elif self.path == "/cadastro":
+        if path == '/api/filmes':
             try:
-                with open(os.path.join(os.getcwd(), "cadastro.html"), "r") as cadastro:
-                    content = cadastro.read()
-                self.send_response(200)
-                self.send_header("Content-type","text/html")
-                self.end_headers()
-                self.wfile.write(content.encode('utf-8'))
+                with open("filmes.json", "r", encoding="utf-8") as f:
+                    data = f.read()
             except FileNotFoundError:
-                self.send_error(404, "File not found")
+                data = "[]"
+            
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(data.encode("utf-8"))
+            return
 
-        elif self.path == "/listar_filmes":
+        routes = {
+            "/login": "login.html",
+            "/cadastro": "cadastro.html",
+            "/listar_filmes": "listar_filmes.html",
+            "/style.css": "style.css",
+        }
+
+        if path in routes:
+            file_path = os.path.join(os.getcwd(), routes[path])
             try:
-                with open(os.path.join(os.getcwd(), "listar_filmes.html"), "r") as listar_filmes:
-                    content = listar_filmes.read()
+                with open(file_path, "rb") as f:
+                    content = f.read()
                 self.send_response(200)
-                self.send_header("Content-type","text/html")
+                self.send_header("Content-type", "text/html; charset=utf-8")
                 self.end_headers()
-                self.wfile.write(content.encode('utf-8'))
+                self.wfile.write(content)
             except FileNotFoundError:
                 self.send_error(404, "File not found")
         else:
             super().do_GET()
- 
 
-        #Método do POST
+    #REQUISIÇÕES POST
     def do_POST(self):
         if self.path == '/send_login':
-            #Tamanho da requisição que está sendo mandada
             content_length = int(self.headers['Content-length'])
             body = self.rfile.read(content_length).decode('utf-8')
             form_data = parse_qs(body)
 
-            login = form_data.get('email',[""])[0]
-            password = form_data.get('senha',[""])[0]
-
-            logou
-            print("Data Form:")
-            print("Email:", form_data.get('email',[""])[0])
-            print("Senha:", form_data.get("senha",[""])[0])
-
-
+            login = form_data.get('email', [""])[0]
+            password = form_data.get('senha', [""])[0]
             
-            self.send_response(200)
-            self.send_header("Content-type", "text/html")
+            #Chama a função criada para verificar o login 
+            self.accont_user(login, password)
+            return
+
+        elif self.path == '/send_cadastro':
+            content_length = int(self.headers['Content-length'])
+            body = self.rfile.read(content_length).decode('utf-8')
+            form_data = parse_qs(body)
+            
+            #Cria um dicionário com os dados do novo filme
+            new_movie = {
+                'nomeFilme': form_data.get('nomeFilme', [""])[0],
+                'atores': form_data.get('atores', [""])[0],
+                'diretor': form_data.get('diretor', [""])[0],
+                'ano': form_data.get('ano', [""])[0],
+                'genero': form_data.get('genero', [""])[0],
+                'produtora': form_data.get('produtora', [""])[0],
+                'sinopse': form_data.get('sinopse', [""])[0],
+            }
+            
+            #Lê o arquivo JSON existente E cria
+            try:
+                with open("filmes.json", "r", encoding="utf-8") as f:
+                    movies = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError):
+                movies = []
+            
+            movies.append(new_movie)
+
+            with open("filmes.json", "w", encoding="utf-8") as f:
+                json.dump(movies, f, indent=4, ensure_ascii=False)
+            
+            print("Novo Filme Cadastrado:")
+            print(new_movie)
+            
+            self.send_response(303)
+            self.send_header('Location', '/listar_filmes')
             self.end_headers()
-            self.wfile.write("Data Retrieving Sucess!".encode('utf-8'))
+            
         else:
-            super(MyHandle, self).do_POST()
-
-
+            super().do_POST()
 
 def main():
     server_address =('',8000)
-    httpd = HTTPServer (server_address,MyHandle)
-    print("Server runing in http://localhost:8000")
+    httpd = HTTPServer(server_address,MyHandler)
+    print("Server running at http://localhost:8000")
     httpd.serve_forever()
- 
-main()
+
+if __name__ == '__main__':
+    main()
