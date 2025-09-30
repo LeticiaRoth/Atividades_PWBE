@@ -3,7 +3,7 @@
         "nomeFilme": "Mad Max - Estrada da Fúria",
         "atores": "Tom Hardy, Charlize Theron, Nicholas Hoult",
         "diretor": "George Miller",
-        "ano": "2015",
+        "ano": "2019",
         "genero": "Ação, Ficção Científica",
         "produtora": "Warner Bros.",
         "sinopse": "Em um futuro pós-apocalíptico, uma imperatriz rebelde e um ex-guerreiro solitário se unem para fugir de um tirano e seu exército."
@@ -18,12 +18,21 @@
         "sinopse": "A saga de uma família mafiosa de Nova York e a ascensão de seu líder mais jovem, Michael Corleone."
     },
     {
-        "nomeFilme": "A Chegada",
-        "atores": "Amy Adams, Jeremy Renner",
-        "diretor": "Denis Villeneuve",
+        "nomeFilme": " A Chegada",
+        "atores": "Amy Adams, Jeremy Renner, Forest Whitaker",
+        "diretor": " Denis Villeneuve",
         "ano": " 2016",
         "genero": "Ficção Científica, Drama",
         "produtora": "Paramount Pictures",
-        "sinopse": "Uma linguista é recrutada pelo governo para se comunicar com alienígenas que chegam à Terra em naves misteriosas."
+        "sinopse": "Uma linguista é recrutada pelo governo para se comunicar com alienígenas que chegaram à Terra em naves misteriosas."
+    },
+    {
+        "nomeFilme": "Enrolados",
+        "atores": "Mandy Moore, Zachary Levi, Donna Murphy",
+        "diretor": "Nathan Greno, Byron Howard",
+        "ano": "2010",
+        "genero": "Animação, Aventura, Fantasia",
+        "produtora": "Walt Disney Pictures",
+        "sinopse": "A princesa Rapunzel, com seus cabelos mágicos de 21 metros, passa a vida isolada em uma torre. Ela só sai de lá quando faz um acordo com um ladrão encantador para explorar o mundo "
     }
 ]

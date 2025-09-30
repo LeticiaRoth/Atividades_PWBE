@@ -17,6 +17,8 @@ server.serve_forever()
 
 '''
  
+
+
 import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
@@ -24,7 +26,7 @@ import json
 
 class MyHandler(SimpleHTTPRequestHandler):
 
-    #Usuário teste
+    # Usuário  para login fazendo a comparação
     def accont_user(self, login, password):
         loga = "leticiaroth@gmail.com"
         senha = "12345"
@@ -42,31 +44,53 @@ class MyHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             self.wfile.write("Usuário não existe".encode('utf-8'))
     
-    #REQUISIÇÕES GET, para servir como API
+    # REQUISIÇÕES GET, para servir como API e páginas
     def do_GET(self):
         parsed_path = urlparse(self.path)
         path = parsed_path.path
-
+        
+        # Rota para a API de todos os filmes
         if path == '/api/filmes':
             try:
                 with open("filmes.json", "r", encoding="utf-8") as f:
                     data = f.read()
             except FileNotFoundError:
                 data = "[]"
-            
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.end_headers()
             self.wfile.write(data.encode("utf-8"))
             return
 
+        # O URL busca pelo indice do filme tambem
+        if path.startswith('/api/filmes/'):
+            try:
+                # Extrai o índice do filme da URL
+                movie_index = int(path.split('/')[-1])
+                with open("filmes.json", "r", encoding="utf-8") as f:
+                    movies = json.load(f)
+                    if 0 <= movie_index < len(movies):
+                        self.send_response(200)
+                        self.send_header("Content-type", "application/json; charset=utf-8")
+                        self.end_headers()
+                        self.wfile.write(json.dumps(movies[movie_index], ensure_ascii=False).encode('utf-8'))
+                    else:
+                        # Se o índice não existir, retorna 404
+                        self.send_error(404, "Filme não encontrado")
+            except (ValueError, FileNotFoundError, json.JSONDecodeError):
+                # Se a URL ou o arquivo for inválido, retorna 400
+                self.send_error(400, "Requisição inválida")
+            return
+
+        # Rotas 
         routes = {
             "/login": "login.html",
             "/cadastro": "cadastro.html",
             "/listar_filmes": "listar_filmes.html",
+            "/editar_filme": "editar_filme.html",
             "/style.css": "style.css",
         }
-
+        
         if path in routes:
             file_path = os.path.join(os.getcwd(), routes[path])
             try:
@@ -77,11 +101,11 @@ class MyHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(content)
             except FileNotFoundError:
-                self.send_error(404, "File not found")
+                self.send_error(404, "Arquivo não encontrado")
         else:
             super().do_GET()
 
-    #REQUISIÇÕES POST
+    # REQUISIÇÕES POST
     def do_POST(self):
         if self.path == '/send_login':
             content_length = int(self.headers['Content-length'])
@@ -91,7 +115,7 @@ class MyHandler(SimpleHTTPRequestHandler):
             login = form_data.get('email', [""])[0]
             password = form_data.get('senha', [""])[0]
             
-            #Chama a função criada para verificar o login 
+            # Chama a função para verificar o login 
             self.accont_user(login, password)
             return
 
@@ -100,7 +124,7 @@ class MyHandler(SimpleHTTPRequestHandler):
             body = self.rfile.read(content_length).decode('utf-8')
             form_data = parse_qs(body)
             
-            #Cria um dicionário com os dados do novo filme
+            # Cria um dicionário com os dados do novo filme
             new_movie = {
                 'nomeFilme': form_data.get('nomeFilme', [""])[0],
                 'atores': form_data.get('atores', [""])[0],
@@ -111,7 +135,7 @@ class MyHandler(SimpleHTTPRequestHandler):
                 'sinopse': form_data.get('sinopse', [""])[0],
             }
             
-            #Lê o arquivo JSON existente E cria
+            # Lê o arquivo JSON existente e adiciona o novo filme
             try:
                 with open("filmes.json", "r", encoding="utf-8") as f:
                     movies = json.load(f)
@@ -133,9 +157,76 @@ class MyHandler(SimpleHTTPRequestHandler):
         else:
             super().do_POST()
 
+    # REQUISIÇÕES DELETE
+    def do_DELETE(self):
+        parsed_path = urlparse(self.path)
+        if parsed_path.path.startswith('/api/filmes/'):
+            try:
+                # Pega o índice do filme a ser deletado
+                movie_index = int(parsed_path.path.split('/')[-1])
+                
+                with open("filmes.json", "r+", encoding="utf-8") as f:
+                    movies = json.load(f)
+                    
+                    if 0 <= movie_index < len(movies):
+                        # Remove o filme da lista
+                        deleted_movie = movies.pop(movie_index)
+                        
+                        # Volta para o início e reescreve
+                        f.seek(0)
+                        json.dump(movies, f, indent=4, ensure_ascii=False)
+                        f.truncate()
+                        
+                        print(f"Filme deletado: {deleted_movie['nomeFilme']}")
+                        self.send_response(200)
+                        self.send_header("Content-type", "application/json")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"message": "Filme deletado com sucesso"}).encode('utf-8'))
+                    else:
+                        self.send_error(404, "Índice de filme não encontrado")
+            except (ValueError, FileNotFoundError, json.JSONDecodeError):
+                self.send_error(400, "Requisição inválida ou arquivo não encontrado")
+        else:
+            self.send_error(404, "Recurso não encontrado")
+
+    # REQUISIÇÕES PUT
+    def do_PUT(self):
+        parsed_path = urlparse(self.path)
+        if parsed_path.path.startswith('/api/filmes/'):
+            try:
+                # Pega pelo índice
+                movie_index = int(parsed_path.path.split('/')[-1])
+                content_length = int(self.headers['Content-Length'])
+                body = self.rfile.read(content_length).decode('utf-8')
+                updated_data = json.loads(body)
+                
+                with open("filmes.json", "r+", encoding="utf-8") as f:
+                    movies = json.load(f)
+                    
+                    if 0 <= movie_index < len(movies):
+                        # Atualiza os dados
+                        movies[movie_index].update(updated_data)
+                        
+                        f.seek(0)
+                        json.dump(movies, f, indent=4, ensure_ascii=False)
+                        f.truncate()
+                        
+                        print(f"Filme atualizado: {movies[movie_index]['nomeFilme']}")
+                        self.send_response(200)
+                        self.send_header("Content-type", "application/json")
+                        self.end_headers()
+                        self.wfile.write(json.dumps({"message": "Filme atualizado com sucesso"}).encode('utf-8'))
+                    else:
+                        self.send_error(404, "Índice de filme não encontrado")
+            except (ValueError, FileNotFoundError, json.JSONDecodeError):
+                self.send_error(400, "Requisição inválida")
+        else:
+            self.send_error(404, "Recurso não encontrado, veja lista de filmes")
+
+# Função para rodar o servidor 
 def main():
-    server_address =('',8000)
-    httpd = HTTPServer(server_address,MyHandler)
+    server_address =('', 8000)
+    httpd = HTTPServer(server_address, MyHandler)
     print("Server running at http://localhost:8000")
     httpd.serve_forever()
 

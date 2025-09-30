@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Filme</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="containerEditarFilme">
+    <main id="formEditar">
+        <section>
+            <h2>Editar Filme</h2>
+            <form id="formularioEdicao">
+                <input type="hidden" id="movieIndex">
+                
+                <ul class="listaFormulario">
+                    <li>
+                        <label for="nomeFilme">Nome do filme:</label>
+                        <input type="text" id="nomeFilme" required>
+                    </li>
+                    <li>
+                        <label for="atores">Atores:</label>
+                        <input type="text" id="atores">
+                    </li>
+                    <li>
+                        <label for="diretor">Diretor:</label>
+                        <input type="text" id="diretor">
+                    </li>
+                    <li>
+                        <label for="ano">Ano:</label>
+                        <input type="number" id="ano">
+                    </li>
+                    <li>
+                        <label for="genero">Gênero:</label>
+                        <input type="text" id="genero">
+                    </li>
+                    <li>
+                        <label for="produtora">Produtora:</label>
+                        <input type="text" id="produtora">
+                    </li>
+                    <li>
+                        <label for="sinopse">Sinopse:</label>
+                        <textarea id="sinopse"></textarea>
+                    </li>
+                </ul>
+                <div class="botoesAcao">
+                    <button type="submit" class="botaoSalvar">Salvar Edição</button>
+                    <button type="button" class="botaoCancelar" onclick="window.location.href='/listar_filmes.html'">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
