@@ -1,0 +1,11 @@
+editora,cnpj,endereco,telefone,email,site
+Editora Aurora,12.345.678/0001-90,"Rua das Flores, 123 - São Paulo/SP",(11) 98765-4321,contato@aurora.com,https://www.aurora.com
+Editora Horizonte,98.765.432/0001-12,"Av. Paulista, 1000 - São Paulo/SP",(11) 91234-5678,suporte@horizonte.com,https://www.horizonte.com
+Editora Saber,11.222.333/0001-44,"Rua da Liberdade, 456 - Rio de Janeiro/RJ",(21) 99876-5432,info@saber.com,https://www.saber.com
+Editora Estrela,22.333.444/0001-55,"Rua das Estrelas, 789 - Belo Horizonte/MG",(31) 98877-6655,estrela@estrela.com,https://www.estrela.com
+Editora Cultura,33.444.555/0001-66,"Av. Sete de Setembro, 321 - Curitiba/PR",(41) 97766-5544,cultura@cultura.com,https://www.cultura.com
+Editora Progresso,44.555.666/0001-77,"Rua do Progresso, 654 - Porto Alegre/RS",(51) 96655-4433,contato@progresso.com,https://www.progresso.com
+Editora Mundo,55.666.777/0001-88,"Av. Atlântica, 987 - Florianópolis/SC",(48) 95544-3322,mundo@mundo.com,https://www.mundo.com
+Editora Alfa,66.777.888/0001-99,"Rua Alfa, 111 - Recife/PE",(81) 94433-2211,alfa@alfa.com,https://www.alfa.com
+Editora Beta,77.888.999/0001-00,"Av. Beta, 222 - Salvador/BA",(71) 93322-1100,beta@beta.com,https://www.beta.com
+Editora Omega,88.999.000/0001-11,"Rua Ômega, 333 - Fortaleza/CE",(85) 92211-0099,omega@omega.com,https://www.omega.com
