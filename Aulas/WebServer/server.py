@@ -23,8 +23,35 @@ import os
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 from urllib.parse import parse_qs, urlparse
 import json
+import mysql.connector
+
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "root"
+)
+
 
 class MyHandler(SimpleHTTPRequestHandler):
+
+    # Classe de carregamento
+    def loadFilmes(self):
+        #Conecta o python com o banco
+        cursor = mydb.cursor()
+        #Primeiro o nome do banco, após isso a da tablea
+        cursor.execute("SELECT * FROM locadora.Diretor")
+
+        result = cursor.fetchall()
+        print("Funcionando",result)
+
+        #Laço para chamar meus diretores
+        for res in result:
+            id_diretor = res[0]
+            nome = res[1]
+            sobrenome = res[2]
+            genero = res[3]
+            print(id_diretor,nome,sobrenome,genero)
+
 
     # Usuário  para login fazendo a comparação
     def accont_user(self, login, password):
@@ -47,6 +74,10 @@ class MyHandler(SimpleHTTPRequestHandler):
     # REQUISIÇÕES GET, para servir como API e páginas
     def do_GET(self):
         parsed_path = urlparse(self.path)
+        #Apenas para mostrar
+
+        self.loadFilmes()
+
         path = parsed_path.path
         
         # Rota para a API de todos os filmes
@@ -222,6 +253,10 @@ class MyHandler(SimpleHTTPRequestHandler):
                 self.send_error(400, "Requisição inválida")
         else:
             self.send_error(404, "Recurso não encontrado, veja lista de filmes")
+
+
+
+
 
 # Função para rodar o servidor 
 def main():
