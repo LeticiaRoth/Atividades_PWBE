@@ -1,0 +1,403 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* TELA LOGIN */
+.containerLogin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
+}
+
+#formLogin {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 7px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 350px;
+}
+
+#formLogin fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#formLogin legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.listaFormulario {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.listaFormulario li {
+    margin-bottom: 1rem;
+}
+
+.listaFormulario label {
+    display: block;
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 0.3rem;
+}
+
+.listaFormulario input,
+.listaFormulario textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.listaFormulario input:focus,
+.listaFormulario textarea:focus {
+    outline: none;
+    border-color: #c915ec;
+    box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
+}
+
+.botaoEntrar {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0e8d23;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.botaoEntrar:hover {
+    background-color: #043f1a;
+}
+
+.navegacaoLogin {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#linkRecuperarSenha {
+    font-size: 0.9rem;
+    color: #4a90e2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+#linkRecuperarSenha:hover {
+    color: #357ab8;
+    text-decoration: underline;
+}
+
+/* TELA CADASTRO */
+.containerCadastro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
+}
+
+#formCadastro {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 7px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 550px;
+}
+
+#formCadastro fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+#formCadastro legend {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.listaCadastro {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.listaCadastro li {
+    margin-bottom: 1rem;
+}
+
+.listaCadastro label {
+    display: block;
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.3rem;
+}
+
+.listaCadastro input,
+.listaCadastro textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.listaCadastro input:focus,
+.listaCadastro textarea:focus {
+    outline: none;
+    border-color: #c915ec;
+    box-shadow: 0 0 6px rgba(80, 201, 195, 0.4);
+}
+
+.botaoCadastrar {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0e8d23;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.botaoCadastrar:hover {
+    background-color: #043f1a;
+}
+
+/* TELA LISTAR FILMES */
+body {
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
+    color: #333;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+.cabecalho {
+    background-color: #fff;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.conteudoPrincipal {
+    padding: 2rem;
+    text-align: center; 
+}
+
+.secaoListaFilmes {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Estilos da tabela */
+#listaFilmesContainer {
+    overflow-x: auto;
+}
+
+#listaFilmesContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+
+#listaFilmesContainer thead th {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 2px solid #357ab8;
+}
+
+#listaFilmesContainer tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+#listaFilmesContainer tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+#listaFilmesContainer td {
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: top;
+    word-wrap: break-word;
+}
+
+.botaoVoltar {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #0e8d23;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.botaoVoltar:hover {
+    background-color: #043f1a;
+}
+
+/* TELA EDITAR FILMES */
+.containerEditarFilme {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #66094ac7, #ee9ce3);
+}
+
+#formEditar {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 7px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 550px; 
+}
+
+#formEditar h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.listaFormulario {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+.listaFormulario li {
+    margin-bottom: 1rem;
+}
+
+.listaFormulario label {
+    display: block;
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.3rem;
+}
+
+.listaFormulario input,
+.listaFormulario textarea {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.listaFormulario input:focus,
+.listaFormulario textarea:focus {
+    outline: none;
+    border-color: #c915ec;
+    box-shadow: 0 0 6px rgba(80, 201, 195, 0.4);
+
+}
+
+#sinopse{
+    resize: none;
+}
+
+
+.botoesAcao {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* Adiciona um espaço entre os botões */
+    margin-top: 1.5rem; /* Ajusta o espaçamento superior */
+}
+
+.botaoSalvar,
+.botaoCancelar {
+    flex: 1; /* Faz com que os botões cresçam e ocupem o espaço disponível */
+    padding: 0.8rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.botaoSalvar {
+    background-color: #0e8d23;
+}
+
+.botaoSalvar:hover {
+    background-color: #043f1a;
+}
+
+.botaoCancelar {
+    background-color: #a31f1f;
+}
+
+.botaoCancelar:hover {
+    background-color: #680909;
+}
+/* Estilos para os botões */
+.botaoEditar,
+.botaoExcluir {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.botaoEditar {
+    background-color: #0e8d23;
+}
+
+.botaoEditar:hover {
+    background-color: #043f1a;
+}
+
+.botaoExcluir {
+    background-color: #dc3545;
+}
+
+.botaoExcluir:hover {
+    background-color: #c82333;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="containerLogin">
+        <form id="formLogin" action="/send_login" method="post" >
+            <fieldset>
+                <legend>Login</legend>
+                <ul class="listaFormulario">
+                    <li>
+                        <label for="usuarioInput">Email:</label>
+                        <input id="usuarioInput" name="email" maxlength="50" required placeholder="leticiaroth@gmail">
+                    </li>
+                    <li>
+                        <label for="senhaInput">Senha:</label>
+                        <input id="senhaInput" name="senha" maxlength="15" required>
+                    </li>
+                </ul>
+                <button type="submit" class="botaoEntrar">Entrar</button>
+                <nav class="navegacaoLogin">
+                    <a href="#" id="linkRecuperarSenha">Esqueci minha senha</a>
+                </nav>
+            </fieldset>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="containerCadastro">
+        <form id="formCadastro" method="POST" action="/send_cadastro">
+            <fieldset>
+                <legend>Cadastro de Filme</legend>
+                <ul class="listaCadastro">
+                    <li>
+                        <label for="nomeFilme">Nome do filme:</label>
+                        <input type="text" id="nomeFilme" name="nomeFilme" maxlength="80" placeholder="A Chegada" required>
+                    </li>
+                    <li>
+                        <label for="atores">Atores:</label>
+                        <input type="text" id="atores" name="atores" placeholder="Amy Adams, Jeremy Renner" maxlength="100" required>
+                    </li>
+                    <li>
+                        <label for="diretor">Diretor:</label>
+                        <input type="text" id="diretor" name="diretor" maxlength="50" placeholder="Denis Villeneuve" required>
+                    </li>
+                    <li>
+                        <label for="ano">Ano:</label>
+                        <input type="text" id="ano" name="ano" maxlength="10" placeholder="2016" required>
+                    </li>
+                    <li>
+                        <label for="genero">Genero:</label>
+                        <input type="text" id="genero" name="genero" maxlength="50" placeholder="Ficção Científica" required>
+                    </li>
+                    <li>
+                        <label for="produtora">Produtora:</label>
+                        <input type="text" id="produtora" name="produtora" placeholder="Warner" maxlength="50">
+                    </li>
+                    <li>
+                        <label for="sinopse">Sinopse:</label>
+                        <input type="text" id="sinopse" name="sinopse" placeholder="Filme de ficição da chegada de extraterrestres"  maxlength="180">
+                    </li>
+                </ul>
+                <button type="submit" class="botaoCadastrar">Cadastrar</button>
+            </fieldset>
+        </form>
+    </main>
+</body>
+</html>
