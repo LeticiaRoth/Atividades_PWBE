@@ -7,12 +7,14 @@
         <p style="color:#c62828">{{ erro() }}</p>
       } @else {
         <ul style="padding-left:1.25rem">
-          @for (a of autores(); track a.id) {
+          @for (a of editoras(); track a.id) {
             <li style="margin:.25rem 0">
-              <strong>{{ a.nome }} {{ a.sobrenome }}</strong>
-              @if (a.nacionalidade) { — <em style="color:#666">{{ a.nacionalidade }}</em> }
-              @if (a.data_nascimento) { • {{ a.data_nascimento }} }
-              @if (a.biografia) { <div style="color:#555">{{ a.biografia }}</div> }
+              <strong>{{ a.editora }}</strong>
+              @if (a.cnpj) { — <em style="color:#666">{{ a.cnpj }}</em> }
+              @if (a.endereco) { • {{ a.endereco }} }
+              @if (a.telefone) { <div style="color:#555">{{ a.telefone }}</div> }
+              @if (a.email) { <div style="color:#555">{{ a.email }}</div> }
+              @if (a.site) { <div style="color:#555">{{ a.site }}</div> }
             </li>
           }
         </ul>
@@ -22,3 +24,4 @@
         <a routerLink="/home">Voltar ao início</a>
       </nav>
     </section>
+
