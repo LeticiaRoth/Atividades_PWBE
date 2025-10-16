@@ -1,0 +1,90 @@
+<p>login works!</p>
+<section class="max-w-sm mx-auto mt-12 px-4">
+  <!--  max-w-sm → largura máxima de 24rem (≈384px).
+        mx-auto → margens horizontais automáticas (centraliza).
+        mt-12 → margem superior de 3rem.
+        px-4 → padding horizontal de 1rem (esquerda/direita). -->
+  <h1 class="mb-4 text-2xl font-semibold">Entrar</h1>
+  <!--  mb-4 → margem inferior de 1rem.
+        text-2xl → tamanho de fonte grande (≈ 24px por padrão).
+        font-semibold → peso de fonte semi-negrito. -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="space-y-4">
+    <!-- space-y-4 → adiciona espaço vertical de 1rem entre os filhos diretos do form. -->
+    <div class="flex flex-col gap-3">
+      <!--  flex → ativa flexbox.
+            flex-col → direção em coluna.
+            gap-3 → 0.75rem de espaçamento entre os itens. -->
+      <label class="block text-sm font-medium text-gray-700">
+        <!--  block → exibe como bloco (quebra linha, ocupa largura toda).
+              text-sm → fonte um passo menor.
+              font-medium → peso de fonte médio.
+              text-gray-700 → cor do texto cinza escuro. -->
+        Usuário
+        <input
+          class="mt-1 block w-full rounded-xl border border-gray-300 px-3 py-2
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="username"
+          autocomplete="username"
+        />
+        <!--  mt-1 → margem superior de 0.25rem (separa do rótulo).
+              block → exibe como bloco.
+              w-full → largura 100%.
+              rounded-xl → cantos bem arredondados.
+              border → aplica borda padrão (1px sólida).
+              border-gray-300 → cor da borda cinza clara.
+              px-3 → padding horizontal 0.75rem.
+              py-2 → padding vertical 0.5rem.
+              focus:outline-none → remove o outline padrão do navegador ao focar.
+              focus:ring-2 → adiciona um anel (box-shadow) de 2px no foco.
+              focus:ring-indigo-500 → cor do anel no foco = índigo 500.
+              focus:border-indigo-500 → cor da borda no foco = índigo 500. -->
+      </label>
+
+      <label class="block text-sm font-medium text-gray-700">
+        Senha
+        <input
+          type="password"
+          class="mt-1 block w-full rounded-xl border border-gray-300 px-3 py-2
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+      </label>
+
+      <button
+        type="submit"
+        [disabled]="form.invalid || loading()"
+        class="self-center inline-flex w-50 justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-white
+               font-medium shadow-sm transition
+               enabled:hover:bg-blue-700 enabled:active:bg-blue-800
+               disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+      <!--  self-center centraliza esse item dentro do contêiner flex-col
+            inline-flex → elemento inline com flexbox (alinha conteúdo).
+            w-full → largura 100% (ocupa a linha toda).
+            justify-center → centraliza o conteúdo na horizontal.
+            rounded-xl → cantos arredondados grandes.
+            bg-indigo-600 → fundo índigo (nível 600).
+            px-4 → padding horizontal 1rem.
+            py-2.5 → padding vertical 0.625rem.
+            text-white → texto branco.
+            font-medium → peso médio.
+            shadow-sm → sombra leve.
+            transition → habilita transições suaves (para as mudanças de cor).
+            enabled:hover:bg-indigo-700 → ao hover (quando habilitado), fundo índigo 700.
+            enabled:active:bg-indigo-800 → ao active (quando habilitado), fundo índigo 800.
+            disabled:opacity-50 → quando desabilitado, opacidade 50%.
+            disabled:cursor-not-allowed → cursor de “proibido” quando desabilitado. -->
+        Entrar
+      </button>
+    </div>
+  </form>
+
+  @if (error()) {
+    <p class="text-red-600 mt-3">{{ error() }}</p>
+  }
+
+  <p class="mt-4">
+    <a routerLink="/" class="text-indigo-600 hover:underline">Voltar</a>
+  </p>
+</section>

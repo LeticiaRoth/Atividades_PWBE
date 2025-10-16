@@ -1,32 +1,33 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EditorasService } from '../../services/editoras.services';
-import { Editora } from '../../models/editora';
+import { LivrosService } from '../../services/livros.services';
+import { Livro } from '../../models/livro';
 import { AuthService } from '../../services/auth.services';
 
 @Component({
   standalone: true,
   imports: [RouterLink],
-  templateUrl: 'editoras.component.html'
+  templateUrl: './livros.component.html'
 })
-export class EditorasComponent {
-  private svc = inject(EditorasService);
+
+export class LivrosComponent {
+  private svc = inject(LivrosService);
   auth = inject(AuthService);
 
-  editoras = signal<Editora[]>([]);
+  livros = signal<Livro[]>([]);
   carregando = signal(true);
   erro = signal<string | null>(null);
 
   constructor() {
-    // Faz a requisição para listar todos as editoras
+    // Faz a requisição para listar todos os livros
     this.svc.listar().subscribe({
       // Quando os dados chegarem com sucesso
       next: (data) => { 
-        this.editoras.set(data); // Atualiza a signal 'editoras' com os dados recebidos
+        this.livros.set(data); // Atualiza a signal 'livros' com os dados recebidos
         this.carregando.set(false); 
       },
       error: () => { 
-        this.erro.set('Falha ao carregar editoras');
+        this.erro.set('Falha ao carregar livros');
         this.carregando.set(false);  // Marca o carregamento como concluído mesmo com erro
       }
     });

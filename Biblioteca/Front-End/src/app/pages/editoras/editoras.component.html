@@ -1,0 +1,30 @@
+<section style="max-width:900px; margin:2rem auto; padding:0 1rem">
+    <h1>Editoras</h1>
+
+    @if (carregando()) {
+        <p>Carregando…</p>
+    } @else if (erro()) {
+        <p style="color:#c62828">{{ erro() }}</p>
+    } @else {
+        <ul style="padding-left:1.25rem">
+            @for (e of editoras(); track e.id) {
+                <li style="margin:.25rem 0">
+                    <strong>{{ e.editora }}</strong>
+                    @if (e.cnpj) { — <em>{{ e.cnpj }}</em> }
+                    @if (e.endereco) { • {{ e.endereco }} }
+                    @if (e.telefone) { • {{ e.telefone }} }
+                    @if (e.email) { • {{ e.email }} }
+                    @if (e.site) { 
+                        <div>
+                            <a href="{{ e.site }}" target="_blank">{{ e.site }}</a>
+                        </div> 
+                    }
+                </li>
+            }
+        </ul>
+    }
+
+    <nav style="margin-top:1rem">
+        <a routerLink="/">Voltar ao início</a>
+    </nav>
+</section>
