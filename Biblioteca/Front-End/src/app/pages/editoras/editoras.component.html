@@ -1,30 +1,167 @@
-<section style="max-width:900px; margin:2rem auto; padding:0 1rem">
-    <h1>Editoras</h1>
+<style>
+  /* -- Fonte e Container Principal -- */
+  .container-editoras {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+      Arial, sans-serif;
+  }
 
-    @if (carregando()) {
-        <p>Carregando…</p>
-    } @else if (erro()) {
-        <p style="color:#c62828">{{ erro() }}</p>
-    } @else {
-        <ul style="padding-left:1.25rem">
-            @for (e of editoras(); track e.id) {
-                <li style="margin:.25rem 0">
-                    <strong>{{ e.editora }}</strong>
-                    @if (e.cnpj) { — <em>{{ e.cnpj }}</em> }
-                    @if (e.endereco) { • {{ e.endereco }} }
-                    @if (e.telefone) { • {{ e.telefone }} }
-                    @if (e.email) { • {{ e.email }} }
-                    @if (e.site) { 
-                        <div>
-                            <a href="{{ e.site }}" target="_blank">{{ e.site }}</a>
-                        </div> 
-                    }
-                </li>
+  .container-editoras h1 {
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: #1f2937;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.5rem;
+  }
+
+  /* -- Mensagens de status (Carregando... e Erro) -- */
+  .status-message-editoras {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 2rem;
+  }
+
+  .status-message-editoras.error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+  }
+
+  /* -- Lista de Editoras -- */
+  .publisher-list-editoras {
+    list-style: none; /* Remove os marcadores de bolinha */
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* Espaço elegante entre os itens */
+  }
+
+  /* -- Item individual da lista (cada editora) -- */
+  .publisher-item-editoras {
+    padding: 1.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .publisher-item-editoras:hover {
+    transform: translateY(-4px); /* Efeito de elevação sutil */
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+  }
+
+  /* -- Cabeçalho com Nome e CNPJ -- */
+  .publisher-header-editoras {
+    margin-bottom: 0.75rem;
+  }
+
+  .publisher-name-editoras {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .publisher-cnpj-editoras {
+    font-size: 1rem;
+    color: #6b7280;
+    font-style: italic;
+  }
+
+  /* -- Metadados (endereço, telefone, email) -- */
+  .publisher-meta-editoras {
+    font-size: 0.9rem;
+    color: #4b5563;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem; /* Espaço entre as informações de contato */
+    margin-bottom: 1rem;
+  }
+
+  /* -- Link do site -- */
+  .publisher-site-editoras {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+  }
+
+  .publisher-site-editoras a {
+    color: #4f46e5; /* Cor primária roxa/índigo */
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .publisher-site-editoras a:hover {
+    text-decoration: underline;
+    color: #312e81;
+  }
+
+  /* -- Navegação "Voltar" -- */
+  .navigation-editoras {
+    margin-top: 2rem;
+  }
+
+  .navigation-editoras a {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .navigation-editoras a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<section class="container-editoras">
+  <h1>Editoras</h1>
+
+  @if (carregando()) {
+    <p class="status-message-editoras">Carregando…</p>
+  } @else if (erro()) {
+    <p class="status-message-editoras error">{{ erro() }}</p>
+  } @else {
+    <ul class="publisher-list-editoras">
+      @for (e of editoras(); track e.id) {
+        <li class="publisher-item-editoras">
+          
+          <div class="publisher-header-editoras">
+            <strong class="publisher-name-editoras">{{ e.editora }}</strong>
+            @if (e.cnpj) {
+              <span class="publisher-cnpj-editoras">— {{ e.cnpj }}</span>
             }
-        </ul>
-    }
+          </div>
 
-    <nav style="margin-top:1rem">
-        <a routerLink="/">Voltar ao início</a>
-    </nav>
+          <div class="publisher-meta-editoras">
+            @if (e.endereco) { 
+              <span>{{ e.endereco }}</span> 
+            }
+            @if (e.telefone) { 
+              <span>{{ e.telefone }}</span> 
+            }
+            @if (e.email) { 
+              <span>{{ e.email }}</span> 
+            }
+          </div>
+          
+          @if (e.site) {
+            <div class="publisher-site-editoras">
+              <a href="{{ e.site }}" target="_blank" rel="noopener noreferrer">
+                Visitar site
+              </a>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+
+  <nav class="navigation-editoras">
+    <a routerLink="/">Voltar ao início</a>
+  </nav>
 </section>
