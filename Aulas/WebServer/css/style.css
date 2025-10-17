@@ -401,3 +401,8 @@ h2 {
 .botaoExcluir:hover {
     background-color: #c82333;
 }
+
+.titleHome{
+    font-size: 40px;
+    color: white;
+}

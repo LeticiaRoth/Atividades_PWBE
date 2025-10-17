@@ -29,7 +29,7 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "root"
-)
+    )
 
 
 class MyHandler(SimpleHTTPRequestHandler):
@@ -51,6 +51,8 @@ class MyHandler(SimpleHTTPRequestHandler):
             sobrenome = res[2]
             genero = res[3]
             print(id_diretor,nome,sobrenome,genero)
+        cursor.close()
+        mydb.commit()
 
 
     # Usuário  para login fazendo a comparação
@@ -70,6 +72,25 @@ class MyHandler(SimpleHTTPRequestHandler):
             self.send_header("Content-type", "text/html; charset=utf-8")
             self.end_headers()
             self.wfile.write("Usuário não existe".encode('utf-8'))
+
+    #INSERT
+    def insertFilmes(self,nome,atores, diretor, ano, genero, produtora, sinopse, orcamento, duracao, poster):
+        cursor = mydb.cursor()
+        cursor.execute("INSERT INTO  locadora.filme(titulo, atores, diretor, ano, genero, produtora, sinopse, orcamento, duracao, poster) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",(nome,atores, diretor, ano, genero, produtora, sinopse, orcamento, duracao, poster))
+        cursor.execute("SELECT id_filme FROM locadora.filme WHERE titulo = %s", (nome,))
+        
+        resultado = cursor.fetchall()
+        print(resultado)
+        #Vem uma lista de listas, primeira posicao das listas de listas
+        cursor.execute("SELECT * from locadora.filme WHERE id_filme = %s", (resultado[0][0],))
+        
+
+        resultado = cursor.fetchall()
+        print(resultado)
+        cursor.close()
+        return resultado
+
+    
     
     # REQUISIÇÕES GET, para servir como API e páginas
     def do_GET(self):
@@ -149,12 +170,27 @@ class MyHandler(SimpleHTTPRequestHandler):
             # Chama a função para verificar o login 
             self.accont_user(login, password)
             return
-
         elif self.path == '/send_cadastro':
             content_length = int(self.headers['Content-length'])
             body = self.rfile.read(content_length).decode('utf-8')
             form_data = parse_qs(body)
+
+            nome = form_data.get('nomeFilme', [""])[0]
+            atores = form_data.get('atores', [""])[0]
+            diretor = form_data.get('diretor', [""])[0]
+            ano = int(form_data.get('ano', ["0"])[0])  
+            genero = form_data.get('genero', [""])[0]
+            produtora = form_data.get('produtora', [""])[0]
+            orcamento = (form_data.get('orcamento', ["0"])[0])  
+            sinopse = form_data.get('sinopse', [""])[0]
+            duracao = form_data.get('duracao', [""])[0]               
+            poster = form_data.get('capa', [""])[0]
+
+            resp = self.insertFilmes(nome,atores, diretor, ano, genero, produtora, sinopse, orcamento, duracao, poster)
+            print("Funcionou")
+
             
+            """
             # Cria um dicionário com os dados do novo filme
             new_movie = {
                 'nomeFilme': form_data.get('nomeFilme', [""])[0],
@@ -178,8 +214,10 @@ class MyHandler(SimpleHTTPRequestHandler):
             with open("filmes.json", "w", encoding="utf-8") as f:
                 json.dump(movies, f, indent=4, ensure_ascii=False)
             
+            
             print("Novo Filme Cadastrado:")
             print(new_movie)
+            """
             
             self.send_response(303)
             self.send_header('Location', '/listar_filmes')
@@ -253,10 +291,6 @@ class MyHandler(SimpleHTTPRequestHandler):
                 self.send_error(400, "Requisição inválida")
         else:
             self.send_error(404, "Recurso não encontrado, veja lista de filmes")
-
-
-
-
 
 # Função para rodar o servidor 
 def main():

@@ -38,11 +38,15 @@ async function displayMovieCatalog() {
             <th>Gênero</th>
             <th>Produtora</th>
             <th>Sinopse</th>
+            <th>Orçamento</th>
+            <th>Duração</th>
+            <th>Poster</th>
             <th>Ações</th>
           </tr>
         </thead>
         <tbody>
     `;
+
 
     movies.forEach((movie, index) => {
       tableHtml += `
@@ -54,6 +58,9 @@ async function displayMovieCatalog() {
           <td>${sanitizeInput(movie.genero || '')}</td>
           <td>${sanitizeInput(movie.produtora || '')}</td>
           <td>${sanitizeInput(movie.sinopse || '')}</td>
+          <td>${sanitizeInput(movie.orcamento || '')}</td>
+          <td>${sanitizeInput(movie.duracao || '')}</td>
+          <td>${sanitizeInput(movie.poster || '')}</td>
           <td>
             <button class="botaoEditar" onclick="window.location.href='/editar_filme.html?index=${index}'">Editar</button>
             <button class="botaoExcluir" onclick="deleteMovie(${index})">Excluir</button>
@@ -167,6 +174,21 @@ async function handleEditPage() {
         window.location.href = '/listar_filmes.html';
     }
 }
+
+//Função imagem
+async function previewImage(event) {
+  const file = event.target.files[0];
+  const preview = document.getElementById('preview');
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+document.getElementById('poster').addEventListener('change', previewImage);
 
 // Inicia a exibição do catálogo ao carregar a página
 document.addEventListener('DOMContentLoaded', () => {
